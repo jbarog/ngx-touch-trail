@@ -6,7 +6,7 @@ This library was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Demo
 
-![alt text](https://raw.githubusercontent.com/jbarog/ngx-touch-trail/master/src/demo.gif?raw=true)
+![Example gif](https://raw.githubusercontent.com/jbarog/ngx-touch-trail/master/src/assets/demo.gif?raw=true)
 
 [Demo here](https://----.github.io).
 
