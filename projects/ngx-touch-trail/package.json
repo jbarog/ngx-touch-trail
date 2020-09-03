@@ -1,0 +1,26 @@
+{
+  "name": "ngx-touch-trail",
+  "version": "1.0.1",
+  "author": "Jose Baro",
+  "license": "MIT",
+  "homepage": "https://github.com/jbarog/ngx-touch-trail",
+  "keywords": [
+    "angular",
+    "javascript",
+    "typescript",
+    "directive",
+    "touchmove",
+    "mousemove"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jbarog/ngx-touch-trail.git"
+  },
+  "peerDependencies": {
+    "@angular/common": "^10.0.9",
+    "@angular/core": "^10.0.9"
+  },
+  "dependencies": {
+    "tslib": "^2.0.0"
+  }
+}
