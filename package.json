@@ -11,7 +11,7 @@
     "build:lib": "ng build ngx-touch-trail",
     "build:lib:watch": "echo 'watch lib INI';ng build ngx-touch-trail --watch;echo 'watch lib END';",
     "pack:lib": "npm run build:lib && cd dist/ngx-touch-trail && npm pack && cd .. && cd ..",
-    "publish:lib": "npm whoami && npm publish"
+    "publish:lib": "npm whoami && cd projects/ngx-touch-trail/ && npm publish && cd .. && cd .."
   },
   "private": true,
   "dependencies": {
