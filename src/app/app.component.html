@@ -59,10 +59,12 @@
   <span>ngx-touch-trail</span>
 </div>
 
-<div touchTrail (touchTrailEnded)="consoleLog($event)" class="content" role="main">
-  <span>touch and move</span>
+<div [touchTrail]="options" class="content" role="main">
+  Please move <button (click)="togleEvent()">{{events[event]}}</button><br>
+  <button *ngIf="events[event]==='touch'" (click)="togleFreeze()">{{options?.freezeOnEnd?"":"not "}}freeze On End</button><br>
+  <label>Trail length</label> <input (input)="changeValue($event,'maxTrailElements')" type="range"><small>{{options?.maxTrailElements}}</small><br>
+  last trail: {{lastTrail | json}}
 </div>
-
 
 
 <router-outlet></router-outlet>

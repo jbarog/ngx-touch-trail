@@ -53,32 +53,16 @@ export class TouchTrailDirective {
     }
   }
   @Input('touchTrail') set setOptions(options: any) {
+    console.log("set")
     this.options = Object.assign(DEFAULTOPTS, options);
+    this.removeListeners();
+    this.createListeners();
   }
   @Output() touchTrailEnded = new EventEmitter();
 
   constructor(private renderer: Renderer2, private elementRef: ElementRef, private ngZone: NgZone, private animationBuilder: AnimationBuilder) { }
   ngOnInit() {
-    this.listenInit = this.renderer.listen(this.elementRef.nativeElement, 'touchstart', e => {
-      this.initialData = this.getTouchData(e);
-      if (this.options.clearOnInit) {
-        this.clearDots(true);
-      }
-    });
-    this.listenEnd = this.renderer.listen(this.elementRef.nativeElement, 'touchend', e => {
-      if(!this.disableTrail) {
-        this.finishTrail(e);
-      }
-    });
-    this.listenMove = this.renderer.listen(this.elementRef.nativeElement, this.options.eventType === EventType.touch ? 'touchmove' : 'mousemove', e => {
-      this.ngZone.runOutsideAngular(() => {
-        if(!this.disableTrail) {
-          const newPositionData = this.getTouchData(e);
-          this.createDots(this.lastData && this.lastData.pos, newPositionData.pos);
-          this.lastData = newPositionData;
-        }
-      });
-    });
+    this.createListeners();
   }
   freezeDots() {
     this.dots.forEach((dot) => {
@@ -94,9 +78,37 @@ export class TouchTrailDirective {
     this.dots = this.dots.filter(d => d.el);
   }
   ngOnDestroy() {
-    this.listenInit();
-    this.listenEnd();
-    this.listenMove();
+    this.removeListeners();
+  }
+  private createListeners() {
+    this.listenInit = this.renderer.listen(this.elementRef.nativeElement, 'touchstart', e => {
+      this.initialData = this.getTouchData(e);
+      if (this.options.clearOnInit) {
+        this.clearDots(true);
+      }
+    });
+    this.listenEnd = this.renderer.listen(this.elementRef.nativeElement, 'touchend', e => {
+      if(!this.disableTrail) {
+        this.finishTrail(e);
+      }
+    });
+    console.log(this.options.eventType === EventType.touch ? 'touchmove' : 'mousemove',this.options)
+    this.listenMove = this.renderer.listen(this.elementRef.nativeElement, this.options.eventType === EventType.touch ? 'touchmove' : 'mousemove', e => {
+      this.ngZone.runOutsideAngular(() => {
+        if(!this.disableTrail) {
+          const newPositionData = this.getTouchData(e);
+          this.createDots(this.lastData && this.lastData.pos, newPositionData.pos);
+          this.lastData = newPositionData;
+        }
+      });
+    });
+  }
+  private removeListeners() {
+    if(this.listenInit){
+      this.listenInit();
+      this.listenEnd();
+      this.listenMove();
+    }
   }
   private finishTrail(event?:any) {
     if (this.options.freezeOnEnd) {
